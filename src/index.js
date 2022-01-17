@@ -1,107 +1,43 @@
-let randomNumber = Math.floor(Math.random() * 100) + 1;
+'use strict';
 
-const guesses = document.querySelector('.guesses');
-const lastResult = document.querySelector('.lastResult');
-const lowOrHi = document.querySelector('.lowOrHi');
+const coursesEn = ["Hamburger, cream sauce and poiled potates",
+                "Goan style fish curry and whole grain rice",
+                "Vegan Chili sin carne and whole grain rice",
+                "Broccoli puree soup, side salad with two napas",
+                "Lunch baguette with BBQ-turkey filling",
+                "Cheese / Chicken / Vege / Halloum burger and french fries"];
+const coursesFi = ["Jauhelihapihvi, ruskeaa kermakastiketta ja keitettyä perunaa",
+                "Goalaista kalacurrya ja täysjyväriisiä",
+                "vegaani Chili sin carne ja täysjyväriisi",
+                "Parsakeittoa,lisäkesalaatti kahdella napaksella",
+                "Lunch baguette with BBQ-turkey filling",
+                "Juusto / Kana / Kasvis / Halloumi burgeri ja ranskalaiset"];
+let sortEng = coursesEn.sort();
+let sortFin = coursesFi.sort();
 
-const guessSubmit = document.querySelector('.guessSubmit');
-const guessField = document.querySelector('.guessField');
-const count = document.querySelector('.count');
-const time = document.querySelector('.time');
-
-let guessCount = 1;
-let resetButton;
-
-const start = () => {
-  startTime = performance.now();
-};
-
-const end = () => {
-  endTime = performance.now();
-  let timeDiff = endTime - startTime; //in ms
-  // strip the ms
-  timeDiff /= 1000;
-
-  // get seconds
-  let seconds = Math.round(timeDiff);
-  //console.log(seconds + " seconds");
-};
-
-
-const checkGuess = () => {
-  const userGuess = Number(guessField.value);
-
-
-  if (guessCount === 1) {
-    guesses.textContent = 'Previous guesses: ';
-  }
-  guesses.textContent += userGuess + ' ';
-
-  if (userGuess === randomNumber) {
-    lastResult.textContent = 'Congratulations! You got it right!';
-    lastResult.style.backgroundColor = 'green';
-    lowOrHi.textContent = '';
-    count.textContent ='spurdo';
-    end();
-    time.textContent='seconds' + seconds;
-    setGameOver();
-  } else if (guessCount === 1) {
-    lastResult.textContent = '!!!GAME OVER!!!';
-    lowOrHi.textContent = '';
-    count.textContent ='spurdo';
-    end();
-    time.textContent='seconds' + seconds;
-    setGameOver();
-  } else {
-    lastResult.textContent = 'Wrong!';
-    lastResult.style.backgroundColor = 'red';
-    if(userGuess < randomNumber) {
-      lowOrHi.textContent = 'Last guess was too low!';
-    } else if(userGuess > randomNumber) {
-      lowOrHi.textContent = 'Last guess was too high!';
-    }
-  }
-
-  guessCount++;
-  guessField.value = '';
-  guessField.focus();
-};
-
-
-guessSubmit.addEventListener('click', () => {
-  start();
-  checkGuess();
-
+let lista = document.getElementById("lista");
+coursesFi.forEach((item)=>{
+let li = document.createElement("li");
+li.innerText = item;
+lista.appendChild(li);
 });
 
+document.getElementById("lang").addEventListener("click", function() {
+  let lista = document.getElementById("lista");
+coursesEn.forEach((item)=>{
+  let li = document.createElement("li");
+  li.innerText = item;
+  lista.appendChild(li);
+  });
+});
 
-const setGameOver = () => {
-  guessField.disabled = true;
-  guessSubmit.disabled = true;
-  resetButton = document.createElement('button');
-  resetButton.textContent = 'Start new game';
-  document.body.append(resetButton);
-  resetButton.addEventListener('click', resetGame);
-};
+//itemit aakkosjärjestykseen
 
-const resetGame = () => {
-  guessCount = 1;
-
-  const resetParas = document.querySelectorAll('.resultParas p');
-  for (const resetPara of resetParas) {
-    resetPara.textContent = '';
-  }
-
-  resetButton.parentNode.removeChild(resetButton);
-
-  guessField.disabled = false;
-  guessSubmit.disabled = false;
-  guessField.value = '';
-  guessField.focus();
-
-  lastResult.style.backgroundColor = 'white';
-
-  randomNumber = Math.floor(Math.random() * 100) + 1;
-};
-
-
+document.getElementById("sort").addEventListener("click", function() {
+  let lista2 = document.getElementById("lista2");
+sortFin.forEach((item)=>{
+  let li = document.createElement("li");
+  li.innerText = item;
+  lista2.appendChild(li);
+  });
+});
